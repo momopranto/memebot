@@ -10,14 +10,13 @@ def list_memes():
 
 def create_meme(MID, t0, t1):
     payload = {
-	'template_id': MID,
-	'text0': t0,
-	'text1': t1,
-	'username': 'XXXXXXXX',
-	'password': 'XXXXXXXX',	
-	'boxes': DEFAULT_IMG_HEIGHT
+	'username': 'slackmemebot',
+	'password': 'memememe',
+	'template_id': 306319,
+	'text0': 'Top text',
+	'text0': 'bOTTOM text'
     }
-    r = requests.post('https://api.imgflip.com/caption_image', params=payload)
+    r = requests.post("https://api.imgflip.com/caption_image", data=payload)
     print r.text
 
 #list_memes()
