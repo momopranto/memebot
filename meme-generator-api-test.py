@@ -10,8 +10,8 @@ def list_memes():
 
 def create_meme(MID, t0, t1):
     payload = {
-	'username': 'slackmemebot',
-	'password': 'memememe',
+	'username': 'XXXXXXX',
+	'password': 'XXXXXXX',
 	'template_id': 306319,
 	'text0': 'Top text',
 	'text0': 'bOTTOM text'
