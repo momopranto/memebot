@@ -3,7 +3,7 @@ import requests, json, time
 
 HELP = "Options: \n!help, display this menu\n!list, list available memes\n!prev <meme_id>, preview a meme template\n!make <meme_id> <top_text> <bottom_text>, create meme\n"
 
-tok = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+tok = 'xoxb-11791613732-SXbxlkDUMCXcezRujSGEuD73'
 sc = SlackClient(tok)
 data = json.loads(sc.api_call("rtm.start", token=tok)) 
 team_id = data['team']['id']
@@ -30,9 +30,7 @@ def list_memes(chan):
 
 def view_template(MID):
     for meme in memelist:
-	print meme['id'], meme['url']
-	print MID
-	if meme['id']==MID:
+	if int(meme['id'])==int(MID):
 	    return meme['url']
 
 def create_meme(MID, t0, t1):
@@ -40,8 +38,8 @@ def create_meme(MID, t0, t1):
 	'text1': t1,
 	'text0': t0,
 	'template_id':MID,
-	'password': 'XXXXXXXXXXX',
-	'username': 'XXXXXXXXXXX',
+	'password': 'slackmemebot',
+	'username': 'memememe',
     }
     r = requests.post("http://api.imgflip.com/caption_image", data=payload)
     response = r.json()
@@ -55,4 +53,4 @@ def send_msg(msg, chan):
 
 #list_memes('G0BPCSJHE')
 #print memelist
-#print view_template(306319)
+send_msg(view_template(306319),'G0BPCSJHE')
