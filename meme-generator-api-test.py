@@ -8,14 +8,14 @@ def list_memes():
 
 def create_meme(MID, t0, t1):
     payload = {
-	'username': 'XXXXXXXXXXX',
-	'password': 'XXXXXXXXXXX',
+	'username': 'slackmemebot',
+	'password': 'memememe',
 	'template_id': MID,
 	'text0': t0,
 	'text1': t1,
     }
     r = requests.post("http://api.imgflip.com/caption_image", data=payload)
-    print r.text
+    print r.json()['data']['url']
 
 #list_memes()
 create_meme(306319, 'such memes', 'much stress')
