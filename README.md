@@ -11,6 +11,15 @@ Python Slack bot for generating context based memes
 4. Edit memebot.py to include the information obtained from above
 5. Enjoy!
 
+#### Required Packages:
+
+You will need the slackclient and requests libraries. If you do not have them they can be installed with pip:
+
+```
+sudo pip install <package-name>
+```
+Where package name would be slackclient or requests. If you do not have pip giyf :)
+
 ### Usage:
 
 ```
