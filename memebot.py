@@ -2,8 +2,10 @@ from slackclient import SlackClient
 import requests, json, time
  
 HELP = "Options: \n!help, display this menu\n!list, list available memes\n!prev <meme_id>, preview a meme template\n!make <meme_id> !top <top_text> !bot <bottom_text>, create meme\n"
+ID_ERROR = "Syntax error: Please make sure you entered a valid command and check to make sure the meme id exists and that you only have one space between words."
+ORDER_ERROR = "Syntax error: Please make sure you provide bottom text after top text"
 
-tok = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+tok = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 sc = SlackClient(tok)
 data = json.loads(sc.api_call("rtm.start", token=tok))
 team_id = data['team']['id']
@@ -74,11 +76,18 @@ if sc.rtm_connect():
 			list_memes(latest[0]['channel'])
 		    elif latestMsg.find('!prev')>=0:
 			prev = latestMsg.split(' ')
-			send_msg(view_template(int(prev[2])),latest[0]['channel'])
+			template = view_template(int(prev[2]))
+			if template==None:
+			    send_msg(ID_ERROR,latest[0]['channel'])
+			else:
+			    send_msg(template,latest[0]['channel'])
 		    elif latestMsg.find('!make')>=0:
-			meme_id = int(latestMsg[(latestMsg.find('!make')+5):latestMsg.find('!top')])
-			top = latestMsg[(latestMsg.find('!top')+4):latestMsg.find('!bot')]
-			bottom = latestMsg[(latestMsg.find('!bot')+4):]
-			send_msg(create_meme(meme_id, top, bottom),latest[0]['channel'])
+			if latestMsg.find('!bot')<latestMsg.find('!top'):
+			    send_msg(ORDER_ERROR,latest[0]['channel'])
+			else:    
+			    meme_id = int(latestMsg[(latestMsg.find('!make')+5):latestMsg.find('!top')])
+			    top = latestMsg[(latestMsg.find('!top')+4):latestMsg.find('!bot')]
+			    bottom = latestMsg[(latestMsg.find('!bot')+4):]
+			    send_msg(create_meme(meme_id, top, bottom),latest[0]['channel'])
 		    else:
 			send_msg(HELP, latest[0]['channel'])
